@@ -1,0 +1,24 @@
+# Maintainer : Moriya Kazumi <kuroclef@gmail.com>
+
+pkgname=mpdris2
+pkgver=0.9.1
+pkgrel=1
+pkgdesc='MPRIS V2.1 support for mpd.'
+arch=(x86_64)
+url=https://github.com/eonpatapon/mpDris2
+license=(GPL3)
+depends=(python-dbus python-gobject python-mpd2)
+makedepends=(intltool)
+source=(https://github.com/eonpatapon/mpDris2/archive/refs/tags/"$pkgver".tar.gz)
+md5sums=(57240f203fcbdd2639f55eb12a66ac74)
+
+build() {
+  cd mpDris2-"$pkgver"
+  ./autogen.sh --prefix=/usr --sysconfdir=/etc
+  make
+}
+
+package() {
+  cd mpDris2-"$pkgver"
+  make DESTDIR="$pkgdir" install
+}

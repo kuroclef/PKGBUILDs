@@ -1,0 +1,37 @@
+# Maintainer : Moriya Kazumi <kuroclef@gmail.com>
+
+pkgname=lspackages
+pkgver=1
+pkgrel=1
+pkgdesc='Any useful commands to help to use Pacman.'
+arch=(x86_64)
+url=https://github.com/kuroclef/dotfiles
+license=(GPL3)
+depends=(pacman-contrib)
+
+package() {
+mkdir -p "$pkgdir"/usr/bin
+cd "$pkgdir"/usr/bin
+
+tee lscheckout <<\EOF
+#!/bin/bash
+pacman -Qkk | grep \)$ |& sort
+EOF
+
+tee lsdisowned <<\EOF
+#!/bin/bash
+comm -23 <(find /{etc,usr,var} \( -path /etc/\*cert\* -o -path /usr/share/mime -o -path /var/\*/\*man \) -prune -o -type d -printf %p/\\n -o -print 2>/dev/null | sort) <(pacman -Qlq | sort -u)
+EOF
+
+tee lsorphaned <<\EOF
+#!/bin/bash
+comm -23 <(pacman -Qdq) <(pacman -Qeq | xargs -l pactree -lu | sort)
+EOF
+
+tee lspackages <<\EOF
+#!/bin/bash
+comm -23 <(pacman -Qeq) <(pacman -Qgq base-devel | sort -u)
+EOF
+
+chmod +x lscheckout lsdisowned lsorphaned lspackages
+}

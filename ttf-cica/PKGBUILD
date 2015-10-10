@@ -1,0 +1,16 @@
+# Maintainer : Moriya Kazumi <kuroclef@gmail.com>
+
+pkgname=ttf-cica
+pkgver=5.0.3
+pkgrel=1
+pkgdesc='プログラミング用日本語等幅フォント Cica(シカ)'
+arch=(any)
+url=https://github.com/miiton/Cica
+license=(custom)
+source=(https://github.com/miiton/Cica/releases/download/v"$pkgver"/Cica_v"$pkgver".zip)
+md5sums=(SKIP)
+
+package() {
+  install -d                "$pkgdir"/usr/share/fonts/TTF
+  install -m 644 Cica-*.ttf "$pkgdir"/usr/share/fonts/TTF
+}

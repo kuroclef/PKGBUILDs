@@ -1,0 +1,17 @@
+# Maintainer : Moriya Kazumi <kuroclef@gmail.com>
+
+pkgname=ttf-hackgen
+pkgver=2.10.0
+pkgrel=1
+pkgdesc='プログラミングフォント 白源 (はくげん／HackGen)'
+arch=(any)
+url=https://github.com/yuru7/HackGen
+license=(custom)
+source=(https://github.com/yuru7/HackGen/releases/download/v"$pkgver"/HackGen_NF_v"$pkgver".zip)
+md5sums=(SKIP)
+
+package() {
+  cd HackGen_NF_v"$pkgver"
+  install -d                      "$pkgdir"/usr/share/fonts/TTF
+  install -m 644 HackGen*NF-*.ttf "$pkgdir"/usr/share/fonts/TTF
+}
